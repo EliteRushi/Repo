@@ -10,7 +10,32 @@
 
   const form = document.getElementById("product-form");
 
-  form.addEventListen
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        if (result.toLowerCase().includes("success")) {
+          alert("✅ Product uploaded successfully!");
+          form.reset();
+        } else {
+          alert("❌ Error! Product not uploaded.\n\nDetails: " + result);
+        }
+      })
+      .catch((error) => {
+        console.error("Error!", error.message);
+        alert("❌ Something went wrong. Please try again.");
+      });
+  });
+</script>
+
     
 </head>
 <body>
