@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <h1>Product Portfolio</h1>
+    <p>Explore our collection of amazing products across various categories.</p>
+  </nav>
+  <main id="product-container"></main>
+  <button class="mode-toggle" onclick="toggleDarkMode()">🌓</button>
+  <script>
+    const container = document.getElementById("product-container");
+    const scriptURL = "https://script.google.com/macros/s/AKfycby-LpjCUFzRr1F-9JLB4gO_UTozluvwpxMhqp-gnVohMve1HDSL4tMfs6MmQ_xlSP8NIg/exec";
+
+    fetch(scriptURL)
+      .then((res) => res.json())
+      .then((data) => {
+        container.innerHTML = "";
+        data.forEach((item) => {
+          const card = document.createElement("a");
+          card.className = "product-card";
+          card.href = item.link || "#";
+          card.target = "_blank";
+          card.innerHTML = \`
+            <img src="\${item.image}" alt="Product Image" />
+            <div class="info">
+              <h2>\${item.title}</h2>
+              <p>\${item.description}</p>
+              <span class="category">\${item.category}</span>
+            </div>\`;
+          container.appendChild(card);
+        });
+      });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+  </script>
+</body>
+</html>
