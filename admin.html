@@ -1,1 +1,64 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal - Upload Product</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div id="login">
+    <h2>Admin Login</h2>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="upload-section" class="hidden">
+    <h2>Upload Product</h2>
+    <form id="upload-form">
+      <input name="title" placeholder="Product Title" required />
+      <input name="description" placeholder="Short Description" required />
+      <input name="image" placeholder="Image URL" required />
+      <input name="category" placeholder="Category" required />
+      <input name="link" placeholder="Link (optional)" />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const uploadSection = document.getElementById('upload-section');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      if (u === 'Rushi' && p === 'Rushisd123') {
+        loginForm.parentElement.classList.add('hidden');
+        uploadSection.classList.remove('hidden');
+      } else {
+        alert('Incorrect credentials!');
+      }
+    });
+
+    document.getElementById('upload-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      fetch('https://script.google.com/macros/s/AKfycby-LpjCUFzRr1F-9JLB4gO_UTozluvwpxMhqp-gnVohMve1HDSL4tMfs6MmQ_xlSP8NIg/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => {
+        alert('Product uploaded!');
+        form.reset();
+      })
+      .catch(err => alert('Upload failed.'));
+    });
+  </script>
+</body>
+</html>
